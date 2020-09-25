@@ -1,6 +1,10 @@
 package com.wdk.baselibrary.network;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+
+import androidx.annotation.MainThread;
 
 import com.google.gson.Gson;
 import com.wdk.baselibrary.data.bean.ServiceDataBean;
@@ -42,15 +46,27 @@ public class NetWorkManager {
     public <T> void getDataFromServer(Observable<T> observable, RequestData requestData, NetWorkCallBackListener<T> netWorkCallBackListener) {
         observable.subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-               .onErrorReturn(new Function<Throwable, T>() {
-                   @Override
-                   public T apply(Throwable throwable) throws Throwable {
-                       if (throwable instanceof ResponseException) {
-                           netWorkCallBackListener.onFailed("失败了");
-                       }
-                       return null;
-                   }
-               })
+                .onErrorReturn(new Function<Throwable, T>() {
+                    @Override
+                    public T apply(Throwable throwable) throws Throwable {
+                        if (throwable instanceof ResponseException) {
+                            ResponseException responseException = (ResponseException) throwable;
+                            String errorMessage=responseException.getErrorMsg();
+                            Handler mainThread=new Handler(Looper.getMainLooper());
+                            mainThread.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    netWorkCallBackListener.onFailed(errorMessage);
+                                    if (requestData.getNetWorkFailedListener() != null) {
+                                        requestData.getNetWorkFailedListener().onFailed(requestData.getWhat(), errorMessage);
+                                    }
+                                }
+                            });
+
+                        }
+                        return null;
+                    }
+                })
                 .subscribe(new NetWorkObserver<T>(requestData, netWorkCallBackListener));
     }
 

@@ -48,11 +48,11 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends DataBindin
             public void onChanged(Integer integer) {
                 switch (integer) {
                     case 1:
-                        Toast.makeText(BaseActivity.this, "开始", Toast.LENGTH_SHORT).show();
+                        showLoading();
                         break;
 
                     case 2:
-                        Toast.makeText(BaseActivity.this, "-----end-----", Toast.LENGTH_SHORT).show();
+                        hideLoading();
                         break;
                 }
             }
@@ -91,11 +91,17 @@ public abstract class BaseActivity<T extends ViewDataBinding> extends DataBindin
     }
 
 
+    /**
+     * 网络请求开始
+     */
     public void showLoading() {
 
     }
 
 
+    /**
+     * 网络请求结束
+     */
     public void hideLoading() {
 
     }

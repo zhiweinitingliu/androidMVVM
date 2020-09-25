@@ -17,12 +17,12 @@ import com.wdk.baselibrary.basepage.AppInitUtil;
  */
 public class CustomerToast {
 
-    public static void showToast(String msg){
-        if (TextUtils.isEmpty(msg)){
+    public static void showToast(String msg) {
+        if (TextUtils.isEmpty(msg)) {
             return;
         }
 
-        Toast.makeText(AppInitUtil.getInstance().getApplication(),msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(AppInitUtil.getInstance().getApplication(), msg, Toast.LENGTH_SHORT).show();
 
     }
 }

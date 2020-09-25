@@ -90,6 +90,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="25dp"
@@ -98,6 +99,7 @@
             android:background="@drawable/shape_login_login_btn"
             android:onClick="doLogin"
             android:text="登录"
+
             android:textColor="@color/colorFFFFFF"
             android:textSize="18dp" />
 

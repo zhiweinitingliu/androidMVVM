@@ -13,27 +13,27 @@ import androidx.lifecycle.MutableLiveData;
  * @LastModityTime(最终修改时间): 2020/9/18 11:36 AM
  * @LastCheckBy: wdk
  */
-public class NetMutableLiveData<T, V> extends MutableLiveData<T> {
+public class NetMutableLiveData<T> extends MutableLiveData<T> {
 
-    private static final String TAG = "NetMutableLiveData";
-
-    public void setNetWorkResponse(V v) {
-        if (switchDataListener != null) {
-            postValue(switchDataListener.getResultData(v));
-        }
-    }
-
-    private SwitchDataListener<T, V> switchDataListener;
-
-    public SwitchDataListener<T, V> getSwitchDataListener() {
-        return switchDataListener;
-    }
-
-    public void setSwitchDataListener(SwitchDataListener<T, V> switchDataListener) {
-        this.switchDataListener = switchDataListener;
-    }
-
-    public interface SwitchDataListener<T, V> {
-        T getResultData(V v);
-    }
+//    private static final String TAG = "NetMutableLiveData";
+//
+//    public void setNetWorkResponse(V v) {
+//        if (switchDataListener != null) {
+//            postValue(switchDataListener.getResultData(v));
+//        }
+//    }
+//
+//    private SwitchDataListener<T, V> switchDataListener;
+//
+//    public SwitchDataListener<T, V> getSwitchDataListener() {
+//        return switchDataListener;
+//    }
+//
+//    public void setSwitchDataListener(SwitchDataListener<T, V> switchDataListener) {
+//        this.switchDataListener = switchDataListener;
+//    }
+//
+//    public interface SwitchDataListener<T, V> {
+//        T getResultData(V v);
+//    }
 }

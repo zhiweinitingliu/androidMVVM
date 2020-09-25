@@ -32,25 +32,19 @@ public class HomeRepository extends BaseRepository {
      * @param requestData        请求的参数
      * @param netMutableLiveData 请求的
      */
-    public void getArticleList(RequestData requestData, NetMutableLiveData<List<ArticleBean>, String> netMutableLiveData) {
+    public void getArticleList(RequestData requestData, NetMutableLiveData<List<ArticleBean.ArticleChildBean>> netMutableLiveData) {
         HomeArticleService service = NetWorkManager.getInstance().create(HomeArticleService.class);
-        Observable<ResponseBody> observable = service.articleList(requestData.getIntParams("page"));
-        NetWorkManager.getInstance().getDataFromServer(observable, requestData, new NetWorkCallBackListener<ResponseBody>() {
+        Observable<ArticleBean> observable = service.articleList(requestData.getIntParams("page"));
+        NetWorkManager.getInstance().getDataFromServer(observable, requestData, new NetWorkCallBackListener<ArticleBean>() {
             @Override
-            public void onSuccess(ResponseBody responseBody) {
-                try {
-                    String string = responseBody.string();
-                    netMutableLiveData.setNetWorkResponse(string);
-                } catch (Exception e) {
-
-                }
+            public void onSuccess(ArticleBean articleBeans) {
+                netMutableLiveData.postValue(articleBeans.getDatas());
             }
 
             @Override
             public void onFailed(String error) {
 
             }
-
         });
     }
 

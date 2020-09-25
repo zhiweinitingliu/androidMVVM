@@ -1,6 +1,5 @@
 package com.wdk.wanandroid.ui.view;
 
-import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +12,7 @@ import android.view.View;
 import com.wdk.baselibrary.basepage.BaseActivity;
 import com.wdk.baselibrary.basepage.DataBindingConfig;
 import com.wdk.baselibrary.utils.SharedPreferencesUtil;
+import com.wdk.wanandroid.BR;
 import com.wdk.wanandroid.R;
 import com.wdk.wanandroid.constances.Constants;
 import com.wdk.wanandroid.constances.MessageEvent;
@@ -24,7 +24,6 @@ import com.wdk.wanandroid.databinding.ActivityMainBinding;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -70,9 +69,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private static final String TAG = "MainActivity";
 
     private void initListener() {
-        mainViewModel.getmArticleList().observe(this, new Observer<List<ArticleBean>>() {
+        mainViewModel.getmArticleList().observe(this, new Observer<List<ArticleBean.ArticleChildBean>>() {
             @Override
-            public void onChanged(List<ArticleBean> articleBeans) {
+            public void onChanged(List<ArticleBean.ArticleChildBean> articleBeans) {
                 Log.e(TAG, "article_onChanged: " + articleBeans.size());
                 articleListAdapter.getItems().addAll(articleBeans);
                 articleListAdapter.notifyDataSetChanged();

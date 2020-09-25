@@ -119,16 +119,17 @@
             android:background="@color/colorEEEEEE" />
 
         <Button
+            android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="35dp"
             android:layout_marginRight="25dp"
             android:background="@drawable/shape_login_login_btn"
-            android:text="注册"
             android:onClick="toRegister"
+            android:text="注册"
             android:textColor="@color/colorFFFFFF"
-            android:textSize="18dp"/>
+            android:textSize="18dp" />
 
     </LinearLayout>
 

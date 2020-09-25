@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 
 import com.wdk.baselibrary.basepage.BaseActivity;
 import com.wdk.baselibrary.basepage.DataBindingConfig;
@@ -40,6 +41,28 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitleName("注册");
+        accountViewModel.getRegisterResultLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    finish();
+                }
+            }
+        });
+
+
+        accountViewModel.getRegisterRequestLiveData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer == 1) {
+                    getMBinding().btnRegister.setEnabled(false);
+                    getMBinding().btnRegister.setText("请稍等...");
+                } else {
+                    getMBinding().btnRegister.setText("注册");
+                    getMBinding().btnRegister.setEnabled(true);
+                }
+            }
+        });
     }
 
     /**
@@ -68,8 +91,6 @@ public class RegisterActivity extends BaseActivity<ActivityRegisterBinding> {
 
         accountViewModel.doRegister(userName, password, rePassword);
 
-
     }
-
 
 }

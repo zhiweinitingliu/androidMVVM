@@ -39,10 +39,11 @@ public class NetGsonResponseBodyConverter<T> implements Converter<ResponseBody, 
     @Override
     public T convert(ResponseBody value) throws IOException {
         String json = value.string();
-        Log.e(TAG, "convert: "+json );
+        Log.e(TAG, "convert: " + json);
         JSONObject jsonObject = null;
         int errorCode = -1;
         String data = null;
+        String errorMsg = "";
         try {
             jsonObject = new JSONObject(json);
         } catch (Exception e) {
@@ -52,6 +53,7 @@ public class NetGsonResponseBodyConverter<T> implements Converter<ResponseBody, 
         if (jsonObject != null) {
             try {
                 errorCode = jsonObject.getInt("errorCode");
+                errorMsg = jsonObject.getString("errorMsg");
             } catch (Exception e) {
                 errorCode = -1;
             }
@@ -65,7 +67,10 @@ public class NetGsonResponseBodyConverter<T> implements Converter<ResponseBody, 
 
 
         if (errorCode != 0) {
-            throw new ResponseException();
+            ResponseException responseException = new ResponseException();
+            responseException.setErrorCode(errorCode);
+            responseException.setErrorMsg(errorMsg);
+            throw responseException;
         }
 
         try {

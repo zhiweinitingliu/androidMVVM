@@ -11,6 +11,8 @@ package com.wdk.baselibrary.network;
  */
 public class RequestData extends BaseRequestData {
 
+    private int what;
+
     public void requestStart() {
         if (getLoadingShowLiveData() != null) {
             getLoadingShowLiveData().postValue(1);
@@ -23,5 +25,18 @@ public class RequestData extends BaseRequestData {
         }
     }
 
+    private NetWorkFailedListener netWorkFailedListener;
 
+    public void setNetWorkFailedListener(int what, NetWorkFailedListener netWorkFailedListener) {
+        this.netWorkFailedListener = netWorkFailedListener;
+        this.what = what;
+    }
+
+    public NetWorkFailedListener getNetWorkFailedListener() {
+        return netWorkFailedListener;
+    }
+
+    public int getWhat() {
+        return what;
+    }
 }

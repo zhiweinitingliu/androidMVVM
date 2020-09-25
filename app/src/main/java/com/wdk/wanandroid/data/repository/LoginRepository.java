@@ -11,17 +11,10 @@ import com.wdk.baselibrary.network.RequestData;
 import com.wdk.baselibrary.utils.SharedPreferencesUtil;
 import com.wdk.wanandroid.api.AccountService;
 import com.wdk.wanandroid.constances.Constants;
-import com.wdk.wanandroid.constances.MessageEvent;
-import com.wdk.wanandroid.data.bean.ArticleBean;
 import com.wdk.wanandroid.data.bean.LoginResponseBean;
-
-import org.greenrobot.eventbus.EventBus;
-import org.json.JSONObject;
-
-import java.util.List;
+import com.wdk.wanandroid.data.bean.RegisterResponseBean;
 
 import io.reactivex.rxjava3.core.Observable;
-import okhttp3.ResponseBody;
 
 /**
  * Description :
@@ -36,7 +29,7 @@ public class LoginRepository extends BaseRepository {
     private static final String TAG = "LoginRepository";
 
     //登录
-    public void doLogin(RequestData requestData, NetMutableLiveData<LoginResponseBean, LoginResponseBean> netMutableLiveData) {
+    public void doLogin(RequestData requestData, NetMutableLiveData<LoginResponseBean> netMutableLiveData) {
         AccountService accountService = NetWorkManager.getInstance().create(AccountService.class);
         Observable<LoginResponseBean> login = accountService.login(requestData.getStrParams("username"), requestData.getStrParams("password"));
         NetWorkManager.getInstance().getDataFromServer(login, requestData, new NetWorkCallBackListener<LoginResponseBean>() {
@@ -44,8 +37,7 @@ public class LoginRepository extends BaseRepository {
             public void onSuccess(LoginResponseBean loginResponseBean) {
                 try {
                     SharedPreferencesUtil.getInstance().putStringValue(Constants.user_info_json, new Gson().toJson(loginResponseBean));
-
-                    netMutableLiveData.setNetWorkResponse(loginResponseBean);
+                    netMutableLiveData.postValue(loginResponseBean);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -59,14 +51,15 @@ public class LoginRepository extends BaseRepository {
         });
     }
 
-    public void doRegister(RequestData requestData, NetMutableLiveData<LoginResponseBean, String> netMutableLiveData) {
+    public void doRegister(RequestData requestData, NetMutableLiveData<RegisterResponseBean> netMutableLiveData) {
         AccountService accountService = NetWorkManager.getInstance().create(AccountService.class);
-        Observable<ResponseBody> register = accountService.register(requestData.getStrParams("username"), requestData.getStrParams("password"), requestData.getStrParams("repassword"));
-        NetWorkManager.getInstance().getDataFromServer(register, requestData, new NetWorkCallBackListener<ResponseBody>() {
+        Observable<RegisterResponseBean> register = accountService.register(requestData.getStrParams("username"), requestData.getStrParams("password"), requestData.getStrParams("repassword"));
+        NetWorkManager.getInstance().getDataFromServer(register, requestData, new NetWorkCallBackListener<RegisterResponseBean>() {
             @Override
-            public void onSuccess(ResponseBody responseBody) {
+            public void onSuccess(RegisterResponseBean registerResponseBean) {
                 try {
-                    netMutableLiveData.setNetWorkResponse(responseBody.string());
+                    SharedPreferencesUtil.getInstance().putStringValue(Constants.user_info_json, new Gson().toJson(registerResponseBean));
+                    netMutableLiveData.postValue(registerResponseBean);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

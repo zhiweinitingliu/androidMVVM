@@ -1,5 +1,9 @@
 package com.wdk.wanandroid.api;
 
+import com.wdk.wanandroid.data.bean.ArticleBean;
+
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
@@ -19,7 +23,7 @@ public interface HomeArticleService {
 //    https://www.wanandroid.com/article/list/1/json
 
     @GET("article/list/{page}/json")
-    Observable<ResponseBody> articleList(@Path("page") int page);
+    Observable<ArticleBean> articleList(@Path("page") int page);
 
 
 }

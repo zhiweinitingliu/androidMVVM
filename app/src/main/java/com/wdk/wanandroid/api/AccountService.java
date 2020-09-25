@@ -1,6 +1,7 @@
 package com.wdk.wanandroid.api;
 
 import com.wdk.wanandroid.data.bean.LoginResponseBean;
+import com.wdk.wanandroid.data.bean.RegisterResponseBean;
 
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.ResponseBody;
@@ -32,5 +33,5 @@ public interface AccountService {
     //注册
     @FormUrlEncoded
     @POST("user/register")
-    Observable<ResponseBody> register(@Field("username") String username, @Field("password") String password, @Field("repassword") String repassword);
+    Observable<RegisterResponseBean> register(@Field("username") String username, @Field("password") String password, @Field("repassword") String repassword);
 }

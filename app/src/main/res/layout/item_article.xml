@@ -5,7 +5,7 @@
 
         <variable
             name="articleBean"
-            type="com.wdk.wanandroid.data.bean.ArticleBean" />
+            type="com.wdk.wanandroid.data.bean.ArticleBean.ArticleChildBean" />
 
     </data>
 
